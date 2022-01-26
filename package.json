@@ -18,5 +18,10 @@
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
         "pusher-js": "^7.0.4"
+    },
+    "dependencies": {
+        "cross-env": "^7.0.3",
+        "resolve-url-loader": "^5.0.0",
+        "vue-template-compiler": "^2.6.14"
     }
 }

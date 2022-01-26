@@ -556,18 +556,41 @@
         </div>
     </div>
 </div>
+@include('real-time-message')
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script>
-    Echo.channel('events')
-        .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
 
-    Echo.private('events')
-        .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
+    // Example 1 - Event Channel
+    // Echo.channel('events')
+    //     .listen('RealTimeMessage', (e) => console.log('RealTimeMessage: ' + e.message));
 
+    // Example 2 - Private Event Channel
+    // Echo.private('events')
+    //     .listen('RealTimeMessage', (e) => console.log('Private RealTimeMessage: ' + e.message));
+
+    // Example 3 - Notification
     Echo.private('App.Models.User.1')
         .notification((notification) => {
             console.log(notification.message);
         });
+
+    // Example 4 - Alpine JS show beautiful message on welcome page
+    function closeMessage(message) {
+        message.__x.$data.showMessage = false;
+    }
+
+    Echo.private('events')
+        .listen('RealTimeMessage', (e) => {
+            let message = document.getElementById('message');
+            message.__x.$data.showMessage = true;
+            message.__x.$data.message = e.message;
+
+            setTimeout(function (message) {
+                closeMessage(message)
+            }, 3000);
+        });
+
 </script>
 
 </body>
